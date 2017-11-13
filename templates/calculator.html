@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Airbnb Optimizer</title>
+  {% include 'headlinks.html' %}
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+  <!-- Navigation-->
+  {% include 'nav.html' %}
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Calculator</li>
+      </ol>
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i> Enter Property Location</div>
+        <div class="card-body">
+            <form action="/calc" method = "post">
+                <div class="form-group">
+                  <label for="lat">Latitude</label>
+                  <input name="lat" class="form-control" id="lat" placeholder="Enter Latitude">
+                </div>
+                <div class="form-group">
+                  <label for="lon">Longitude</label>
+                  <input name="lon" class="form-control" id="lon" placeholder="Enter Longitude">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="autoloc" class="btn btn-success">Autofill</button>
+            </form>
+        </div>
+      </div>
+      {% if lat is defined and lon is defined %}
+      <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-area-chart"></i> Your Stats</div>
+        <div class="card-body">
+            <h2>Estimated weekly income</h2>
+            {% if weeklyEst is defined %}
+            <p>${{weeklyEst}}</p>
+            {% else %}
+            <p>No relevant results</p>
+            {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    {% include 'footer.html' %}
+    {% include 'bodylinks.html' %}
+  </div>
+</body>
+
+</html>
