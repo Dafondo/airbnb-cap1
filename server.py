@@ -1,11 +1,7 @@
 from flask import Flask, request, render_template, g, jsonify
 import sqlite3
-from math import pi
 
 app = Flask(__name__)
-
-# from . import config
-# from instance import config
 
 DATABASE = 'db/airbnb.db'
 
