@@ -37,7 +37,6 @@
                   <input name="lon" class="form-control" id="lon" placeholder="Enter Longitude">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <button id="autoloc" class="btn btn-success">Autofill</button>
             </form>
         </div>
       </div>
@@ -49,6 +48,12 @@
             <h2>Estimated weekly income</h2>
             {% if weeklyEst is defined %}
             <p>${{weeklyEst}}</p>
+            {% else %}
+            <p>No relevant results</p>
+            {% endif %}
+            <h2>Optimal price per night</h2>
+            {% if optimalPrice is defined %}
+            <p>${{optimalPrice}}</p>
             {% else %}
             <p>No relevant results</p>
             {% endif %}

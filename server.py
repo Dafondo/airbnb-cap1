@@ -45,7 +45,8 @@ def calc():
         lat = float(request.form['lat'])
         lon = float(request.form['lon'])
         r = 0.001
-        results = query_db('SELECT * FROM listings WHERE abs(latitude - %f) < %f and abs(longitude - %f) < %f' % (lat, r, lon, r))
+        
+        results = query_db('SELECT id, price, weekly_price, monthly_price FROM listings WHERE abs(latitude - %f) < %f and abs(longitude - %f) < %f' % (lat, r, lon, r))
         if len(results) < 1:
             return render_template('calculator.html', lat=lat, lon=lon)
         returnVal = ''
@@ -60,7 +61,11 @@ def calc():
             returnVal += str(result['id']) + '   \n'
         weeklyEst /= len(results)
         weeklyEst = '%.2f' % round(weeklyEst,2)
-        return render_template('calculator.html', lat=lat, lon=lon, weeklyEst = weeklyEst)
+
+        results = query_db('SELECT AVG(CAST(SUBSTR(price, 2) as FLOAT)) FROM listings WHERE reviews_per_month > 1 and abs(latitude - %f) < %f and abs(longitude - %f) < %f' % (lat, r, lon, r))
+        optimalPrice = '%.2f' % results[0][0]
+
+        return render_template('calculator.html', lat=lat, lon=lon, weeklyEst = weeklyEst, optimalPrice = optimalPrice)
     else:
         return render_template('calculator.html')
 
