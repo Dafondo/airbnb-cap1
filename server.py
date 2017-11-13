@@ -69,19 +69,22 @@ def calc():
 def stats():
     if request.method == 'GET':
         results = []
-        for i in xrange(0, 3):
+        for i in xrange(0, 4):
             results.append([])
         g1 = query_db('SELECT AVG(availability_30), AVG(review_scores_rating) FROM listings GROUP BY availability_30 ORDER BY availability_30 ASC')
         g2 = query_db('SELECT DISTINCT neighborhood_cleansed, AVG(CAST(SUBSTR(price, 2) as FLOAT)) FROM listings GROUP BY neighborhood_cleansed ORDER BY neighborhood_cleansed ASC')
-        g3 = query_db('SELECT DISTINCT host_response_time, AVG(review_scores_communication) FROM listings GROUP BY host_response_time ORDER BY host_response_time ASC')
+        g3 = query_db('SELECT DISTINCT neighborhood_cleansed, AVG(review_scores_rating) FROM listings GROUP BY neighborhood_cleansed ORDER BY neighborhood_cleansed ASC')
+        g4 = query_db('SELECT DISTINCT host_response_time, AVG(review_scores_communication) FROM listings GROUP BY host_response_time ORDER BY host_response_time ASC')
         for item in g1:
             if item[0] != 0:
                 results[0].append([item[0], round(item[1],2)])
         for item in g2:
             results[1].append([item[0], round(float(item[1]),2)])
         for item in g3:
+            results[2].append([item[0], round(item[1],2)])
+        for item in g4:
             if item[0] != '':
-                results[2].append([item[0], round(item[1],2)])
+                results[3].append([item[0], round(item[1],2)])
 
         return jsonify(results)
         

@@ -45,7 +45,7 @@ $.getJSON('/stats', function (data) {
                 tooltip: {
                     headerFormat: '<b>{point.x} days available</b><br>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">Average review score:</td>' +
-                    '<td style="padding:0">${point.y:.2f}</td></tr>'
+                    '<td style="padding:0">{point.y:.2f}%</td></tr>'
                 }
             }
         },
@@ -112,10 +112,57 @@ $.getJSON('/stats', function (data) {
             type: 'column'
         },
         title: {
+            text: 'Average Review Score for Each Neighborhood'
+        },
+        xAxis: {
+            categories: cat1,
+            crosshair: true,
+            title: {
+                text: 'Neighborhood'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Average Review Score'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px"><b>{point.key}</b></span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">Average review score:</td>' +
+                '<td style="padding:0">{point.y:.2f}%</td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'series2',
+            data: series2
+        }]
+    });
+    cat3 = new Array();
+    series3 = new Array();
+    for (var item in data[3]) {
+        cat3.push(data[3][item][0]);
+        series3.push(data[3][item][1]);
+    }
+    Highcharts.chart('graph4', {
+        chart: {
+            type: 'column'
+        },
+        title: {
             text: 'Host Response Time vs Average Communication Rating'
         },
         xAxis: {
-            categories: cat2,
+            categories: cat3,
             crosshair: true,
             title: {
                 text: 'Host Response Time'
@@ -144,8 +191,8 @@ $.getJSON('/stats', function (data) {
             }
         },
         series: [{
-            name: 'series2',
-            data: series2
+            name: 'series3',
+            data: series3
         }]
     });
 });
